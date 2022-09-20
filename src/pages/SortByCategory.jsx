@@ -11,6 +11,7 @@ import basketball from "../images/Icons/ball-of-basketball.png";
 import boxing from "../images/Icons/boxing-gloves.png";
 import cricket from "../images/Icons/cricket.png";
 import football from "../images/Icons/rugby-ball.png";
+var solanaWeb3 = require("@solana/web3.js");
 
 const SortByCategory = () => {
   const [walletAdd, setWalletAdd] = useState("");
