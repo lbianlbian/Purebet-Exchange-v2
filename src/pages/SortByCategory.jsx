@@ -66,8 +66,8 @@ const SortByCategory = () => {
       );
       
       for(var x = 0; x < homeAccs.length; x++){
-        var id1 = accs[x].account.data[0];
-        var id2 = accs[x].account.data[1];
+        var id1 = homeAccs[x].account.data[0];
+        var id2 = homeAccs[x].account.data[1];
         var indexNeeded = id1 * 256 + id2;
         
         var stakeHome = (homeAccs[x].account.data[2] * 256 + accs[x].account.data[3]) / 100;
@@ -86,17 +86,17 @@ const SortByCategory = () => {
         toMatchOdds = Math.round(toMatchOdds * 100) / 100;
         
         if(toMatchOdds == highest.odds){
-          highest.accArr.push({amount: toMatchStake, acc: accs[x].pubkey.toString()});
+          highest.accArr.push({amount: toMatchStake, acc: homeAccs[x].pubkey.toString()});
           highest.totalAmount += toMatchStake;
           highest.totalAmount = round(highest.totalAmount, 2);
         }
         else if(toMatchOdds == secondHighest.odds){
-          secondHighest.accArr.push({amount: toMatchStake, acc: accs[x].pubkey.toString()});
+          secondHighest.accArr.push({amount: toMatchStake, acc: homeAccs[x].pubkey.toString()});
           secondHighest.totalAmount += toMatchStake;
           secondHighest.totalAmount = round(secondHighest.totalAmount, 2);
         }
         else if(toMatchOdds == thirdHighest.odds){
-          thirdHighest.accArr.push({amount: toMatchStake, acc: accs[x].pubkey.toString()});
+          thirdHighest.accArr.push({amount: toMatchStake, acc: homeAccs[x].pubkey.toString()});
           thirdHighest.totalAmount += toMatchStake;
           thirdHighest.totalAmount = round(thirdHighest.totalAmount, 2);
         }
@@ -111,7 +111,7 @@ const SortByCategory = () => {
       
           highest.odds = toMatchOdds;
           highest.totalAmount = toMatchStake;
-          highest.accArr = [{ amount: toMatchStake, acc: accs[x].pubkey.toString() }];
+          highest.accArr = [{ amount: toMatchStake, acc: homeAccs[x].pubkey.toString() }];
         }
         else if(toMatchOdds > secondHighest.odds){
           thirdHighest.odds = secondHighest.odds;
@@ -120,17 +120,17 @@ const SortByCategory = () => {
       
           secondHighest.odds = toMatchOdds;
           secondHighest.totalAmount = toMatchStake;
-          secondHighest.accArr = [{amount: toMatchStake, acc: accs[x].pubkey.toString()}];
+          secondHighest.accArr = [{amount: toMatchStake, acc: homeAccs[x].pubkey.toString()}];
         }
         else if(toMatchOdds > thirdHighest.odds){
           thirdHighest.odds = toMatchOdds;
           thirdHighest.totalAmount = toMatchStake;
-          thirdHighest.accArr = [{amount: toMatchStake, acc: accs[x].pubkey.toString() }];
+          thirdHighest.accArr = [{amount: toMatchStake, acc: homeAccs[x].pubkey.toString() }];
         }
       }
       
       //away is blank so people can bet on away
-      var homeAccs = await connection.getProgramAccounts(
+      var awayAccs = await connection.getProgramAccounts(
         programID, 
         {filters:
           [
@@ -141,13 +141,13 @@ const SortByCategory = () => {
         {dataSlice: {length: 6, offset:0} }
       );
       
-      for(var x = 0; x < homeAccs.length; x++){
-        var id1 = accs[x].account.data[0];
-        var id2 = accs[x].account.data[1];
+      for(var x = 0; x < awayAccs.length; x++){
+        var id1 = awayAccs[x].account.data[0];
+        var id2 = awayAccs[x].account.data[1];
         var indexNeeded = id1 * 256 + id2;
         
-        var stakeHome = (homeAccs[x].account.data[2] * 256 + accs[x].account.data[3]) / 100;
-        var stakeAway = (homeAccs[x].account.data[4] * 256 + accs[x].account.data[5]) / 100;
+        var stakeHome = (awayAccs[x].account.data[2] * 256 + awayAccs[x].account.data[3]) / 100;
+        var stakeAway = (awayAccs[x].account.data[4] * 256 + awayAccs[x].account.data[5]) / 100;
         if(stakeHome == 0 || stakeAway == 0){
           continue;
         }
@@ -162,17 +162,17 @@ const SortByCategory = () => {
         toMatchOdds = Math.round(toMatchOdds * 100) / 100;
         
         if(toMatchOdds == highest.odds){
-          highest.accArr.push({amount: toMatchStake, acc: accs[x].pubkey.toString()});
+          highest.accArr.push({amount: toMatchStake, acc: awayAccs[x].pubkey.toString()});
           highest.totalAmount += toMatchStake;
           highest.totalAmount = round(highest.totalAmount, 2);
         }
         else if(toMatchOdds == secondHighest.odds){
-          secondHighest.accArr.push({amount: toMatchStake, acc: accs[x].pubkey.toString()});
+          secondHighest.accArr.push({amount: toMatchStake, acc: awayAccs[x].pubkey.toString()});
           secondHighest.totalAmount += toMatchStake;
           secondHighest.totalAmount = round(secondHighest.totalAmount, 2);
         }
         else if(toMatchOdds == thirdHighest.odds){
-          thirdHighest.accArr.push({amount: toMatchStake, acc: accs[x].pubkey.toString()});
+          thirdHighest.accArr.push({amount: toMatchStake, acc: awayAccs[x].pubkey.toString()});
           thirdHighest.totalAmount += toMatchStake;
           thirdHighest.totalAmount = round(thirdHighest.totalAmount, 2);
         }
@@ -187,7 +187,7 @@ const SortByCategory = () => {
       
           highest.odds = toMatchOdds;
           highest.totalAmount = toMatchStake;
-          highest.accArr = [{ amount: toMatchStake, acc: accs[x].pubkey.toString() }];
+          highest.accArr = [{ amount: toMatchStake, acc: awayAccs[x].pubkey.toString() }];
         }
         else if(toMatchOdds > secondHighest.odds){
           thirdHighest.odds = secondHighest.odds;
@@ -196,12 +196,12 @@ const SortByCategory = () => {
       
           secondHighest.odds = toMatchOdds;
           secondHighest.totalAmount = toMatchStake;
-          secondHighest.accArr = [{amount: toMatchStake, acc: accs[x].pubkey.toString()}];
+          secondHighest.accArr = [{amount: toMatchStake, acc: awayAccs[x].pubkey.toString()}];
         }
         else if(toMatchOdds > thirdHighest.odds){
           thirdHighest.odds = toMatchOdds;
           thirdHighest.totalAmount = toMatchStake;
-          thirdHighest.accArr = [{amount: toMatchStake, acc: accs[x].pubkey.toString() }];
+          thirdHighest.accArr = [{amount: toMatchStake, acc: awayAccs[x].pubkey.toString() }];
         }
       }
       
